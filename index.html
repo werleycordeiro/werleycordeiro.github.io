@@ -13,7 +13,7 @@
 
 <title>Home</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -32,8 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -62,6 +62,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -82,6 +83,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -139,11 +143,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -172,8 +180,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -181,16 +189,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -234,7 +235,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -261,12 +262,6 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/werleycordeiro">
-    <span class="fab fa-hashnode"></span>
-     
-  </a>
-</li>
-<li>
   <a href="https://github.com/werleycordeiro">
     <span class="fab fa-github"></span>
      
@@ -305,12 +300,11 @@ $(document).ready(function () {
 <div id="hi-there" class="section level3">
 <h3>Hi there, 👋</h3>
 <p>Welcome to my webpage!</p>
-<p>I hold a master’s degree from the Graduate Program in Economics (PPGEco-UFSC). Under the supersivion of Prof. João Frois Caldeira and André A. P. Santos, I am completing my Ph.D. in Economics at Federal University of Santa Catarina (Brazil) with an expected degree date of Mach 2023.</p>
+<p>I am a Data Analyst at <a href="https://www.itau.com.br/">Itaú-Unibanco</a>. I receveid my B.A. in economics from <a href="http://www.ufrgs.br/english/home">UFRGS</a> and my Ph.D. in economics from <a href="https://en.ufsc.br/">UFSC</a>. My <a href="https://werleycordeiro.github.io/publications.html">research</a> is broadly focused on financial econometrics. I am currently interested in the following topics: macro-finance, dynamic factor models as state-space models, term structure models, term premium, term structure forecasting, and inflation forecasting.</p>
+<p>To improve students’ accessibility to macro-finance data for free and gain insight from such data, I have recently developed two <a href="https://pypi.org/project/Dynamic-Nelson-Siegel-Svensson-Kalman-Filter/0.1.0/">Python</a> and <a href="https://github.com/werleycordeiro/GBcurves">R</a> packages to fit and forecast the yield curves through dynamic factor models using a state-space representation.</p>
 </div>
 </div>
 </div>
-<p>My research is broadly focused on financial econometrics. I am currently interested in the following topics: macro-finance, dynamic factor models as state-space models, and term structure models; direction-of-change forecasts, forecast combinations, volatility forecasting, and term structure forecasting. Lastly, I have an interest in machine learning applied to financial econometrics.</p>
-<p>To improve students’ accessibility to macro-finance data for free and gain insight from such data, I have recently developed two <a href="https://cran.r-project.org/web/packages/GBcurves/index.html">R</a> and <a href="https://pypi.org/project/Dynamic-Nelson-Siegel-Svensson-Kalman-Filter/0.1.0/">Python</a> packages to fit and forecast the yield curves through dynamic factor models using a state-space representation.</p>
 
 
 
